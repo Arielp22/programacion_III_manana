@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Formulario de Inscripción - Cursos Sacramentales</title>
+</head>
+<body>
+    <p>Formulario de inscripción a los cursos de sacramentos de la parroquia</p>
+    <form action="procesar_inscripcion.php" method="post">
+        <table border="0">
+            <tr>
+                <th>
+                    <label for="nombre">Nombre del participante:</label>
+                    <input type="text" id="nombre" name="nombre">
+                </th>
+                <th>
+                    <label for="email">Correo electrónico:</label>       
+                    <input type="email" id="email" name="email">
+                </th>
+            </tr>
+
+            <tr>
+                <th>
+                    <label for="fecha">Fecha de nacimiento:</label>
+                    <input type="date" id="fecha" name="fecha">
+                </th>
+                <th>
+                    <label for="color">Color litúrgico favorito:</label>
+                    <input type="color" id="color" name="color">
+                </th>
+            </tr>
+
+            <tr>
+                <th>
+                    <label>Género:</label><br>
+                    <input type="radio" id="m" name="genero" value="m"> Masculino
+                    <input type="radio" id="f" name="genero" value="f"> Femenino
+                </th>
+                <th>
+                    <label for="pais">País:</label>       
+                    <select id="pais" name="pais">
+                        <option value="ecuador">Ecuador</option>
+                        <option value="colombia">Colombia</option>
+                        <option value="peru">Perú</option>
+                    </select>
+                </th>
+            </tr>
+
+            <tr>
+                <th>
+                    <label for="comentarios">Comentarios o motivo de inscripción:</label><br>
+                    <textarea id="comentarios" name="comentarios" rows="5"></textarea>
+                </th>
+                <th>
+                    <input type="checkbox" id="acepto" name="acepto" required>
+                    <label for="acepto">Confirmo mi inscripción al curso sacramental</label>
+                </th>
+            </tr>
+        </table>
+        <br>
+        <input type="submit" value="Enviar inscripción">
+        <input type="reset" value="Limpiar formulario">
+    </form>
+</body>
+</html>
