@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { AnyMxRecord } from 'dns';
 
 @Injectable()
 export class BasicsService {
@@ -47,6 +48,28 @@ export class BasicsService {
             parametro: parametro
         };
     }
+
+    calculoTriangulo(body:any): object{
+        const result : number = (body.base * body.altura)/2
+
+        return{
+            service: 'Blog Backend',
+            controller: '/calculo-area-triangulo',
+            function: 'calculo area triangulo',            
+            resultado: result
+        };
+    }
+    
+    areaRectangulo(ancho:number, alto:number): object{
+        const result: number = ancho*alto;
+        return{
+            service: 'Blog Backend',
+            controller: '/calculo-area-rectangulo',
+            function: 'calculo-area-rectangulo/:ancho/:alto',            
+            resultado: result
+        }
+    }
+    
 
 }
 
