@@ -4,9 +4,12 @@ import { Repository } from 'typeorm';
 import { Category } from './category.entity';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
+import { paginate, IPaginationOptions, Pagination } from 'nestjs-typeorm-paginate';
+
 
 @Injectable()
 export class CategoriesService {
+  repository: any;
   constructor(
     @InjectRepository(Category)
     private readonly categoryRepository: Repository<Category>,
@@ -17,9 +20,11 @@ export class CategoriesService {
     return this.categoryRepository.save(category);
   }
 
-  findAll() {
-    return this.categoryRepository.find();
+  async findAll(options: IPaginationOptions): Promise<Pagination<Category>> {
+    const queryBuilder = this.categoryRepository.createQueryBuilder('category');
+    return paginate<Category>(queryBuilder, options);
   }
+
 
   findOne(id: string) {
     return this.categoryRepository.findOne({ where: { id } });
