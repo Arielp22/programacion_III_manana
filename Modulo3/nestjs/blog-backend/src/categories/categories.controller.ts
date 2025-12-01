@@ -5,6 +5,8 @@ import { UpdateCategoryDto } from './dto/update-category.dto';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { Pagination } from 'nestjs-typeorm-paginate';
 import { Category } from './category.entity';
+import { SuccessResponseDto } from 'src/common/dto/response.dto';
+import { response } from 'express';
 
 @Controller('categories')
 export class CategoriesController {
@@ -17,12 +19,27 @@ export class CategoriesController {
   }
 
   @Get()
-  findAll(
+  async findAll(
     @Query('page') page = 1,
     @Query('limit') limit = 10,
-  ): Promise<Pagination<Category>> {
+    @Query('search') search?: string,
+    @Query('searchField') searchField = 'name',
+    @Query('sortBy') sortBy = 'id',
+    @Query('sortOrder') sortOrder: 'ASC' | 'DESC' = 'ASC',
+  ){
+    limit = Number(limit);
+    page = Number(page);
     limit = limit > 100 ? 100 : limit;
-    return this.categoriesService.findAll({ page, limit });
+
+    const response = await this.categoriesService.findAll({
+      page,
+      limit,
+      search,
+      searchField,
+      sortBy,
+      sortOrder,
+    });
+    return new SuccessResponseDto('list Users succesfully', response);
   }
 
   @Get(':id')

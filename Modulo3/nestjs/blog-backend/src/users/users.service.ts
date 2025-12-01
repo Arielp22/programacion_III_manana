@@ -11,6 +11,13 @@ import { User } from './user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
+interface UserPaginationOptions extends IPaginationOptions {
+  search?: string;
+  searchField?: string;
+  sortBy?: string;
+  sortOrder?: 'ASC' | 'DESC';
+}
+
 @Injectable()
 export class UsersService {
   constructor(
@@ -32,20 +39,31 @@ export class UsersService {
     }
   }
 
-  async findAll(
-    options: IPaginationOptions,
-    isActive?: boolean,
-  ): Promise<Pagination<User> | null> {
-    try {
-      const query = this.userRepository.createQueryBuilder('user');
-      if (isActive !== undefined) {
-        query.where('user.isActive = :isActive', { isActive });
-      }
-      return await paginate<User>(query, options);
-    } catch (err) {
-      console.error('Error retrieving users:', err);
-      return null;
+  async findAll(options: UserPaginationOptions): Promise<Pagination<User>> {
+    const { search, searchField, sortBy, sortOrder } = options;
+
+    const queryBuilder = this.userRepository.createQueryBuilder('user');
+
+    const allowedSearchFields = ['email', 'username'];
+    const allowedSortFields = ['id', 'username', 'email'];
+
+    if (search && searchField && allowedSearchFields.includes(searchField)) {
+      queryBuilder.andWhere(
+        `LOWER(user.${searchField}) LIKE :search`,
+        { search: `%${search.toLowerCase()}%` },
+      );
     }
+
+    const orderField = sortBy && allowedSortFields.includes(sortBy) ? sortBy : 'id';
+    const orderDirection: 'ASC' | 'DESC' =
+      sortOrder === 'DESC' ? 'DESC' : 'ASC';
+
+    queryBuilder.orderBy(`user.${orderField}`, orderDirection);
+
+    return paginate<User>(queryBuilder, {
+      page: options.page,
+      limit: options.limit,
+    });
   }
 
   async findOne(id: string): Promise<User | null> {
@@ -71,11 +89,11 @@ export class UsersService {
       const user = await this.userRepository.findOne({ where: { id } });
     if (!user) return null;
 
-    if (UpdateUserDto.password) {
-      UpdateUserDto.password = await bcrypt.hash(UpdateUserDto.password, 10);
+    if (updateUserDto.password) {
+      updateUserDto.password = await bcrypt.hash(updateUserDto.password, 10);
     }
 
-    Object.assign(user, UpdateUserDto);
+    Object.assign(user, updateUserDto);
     return this.userRepository.save(user);
     } catch (err) {
       console.error('Error updating user:', err);
@@ -108,5 +126,3 @@ export class UsersService {
     }
   }
 }
-
-
