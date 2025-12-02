@@ -13,6 +13,7 @@ interface PostPaginationOptions extends IPaginationOptions {
   sortOrder?: 'ASC' | 'DESC';
 }
 
+
 @Injectable()
 export class PostsService {
   constructor(
@@ -60,8 +61,8 @@ export class PostsService {
       page: options.page,
       limit: options.limit,
     });
-    
   }
+
 
   async findOne(id: string): Promise<Post | null> {
     try {
@@ -102,8 +103,5 @@ export class PostsService {
     }
   }
 }
-
-
-
 
 

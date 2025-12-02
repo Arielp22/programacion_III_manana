@@ -13,9 +13,9 @@ interface CategoryPaginationOptions extends IPaginationOptions {
   sortOrder?: 'ASC' | 'DESC';
 }
 
+
 @Injectable()
 export class CategoriesService {
-  categoryRepository: any;
   constructor(
     @InjectRepository(Category)
     private readonly categoryRepo: Repository<Category>,
@@ -33,8 +33,7 @@ export class CategoriesService {
 
   async findAll(options: CategoryPaginationOptions): Promise<Pagination<Category>> {
     const { search, searchField, sortBy, sortOrder } = options;
-    const queryBuilder = this.categoryRepository.createQueryBuilder('category');
-    // Campos permitidos para búsqueda y ordenamiento (evitar SQL injection)
+    const queryBuilder = this.categoryRepo.createQueryBuilder('category');
     const allowedSearchFields = ['name'];
     const allowedSortFields = ['id', 'name'];
     if (search && searchField && allowedSearchFields.includes(searchField)) {
@@ -43,7 +42,6 @@ export class CategoriesService {
         { search: `%${search.toLowerCase()}%` },
       );
     }
-
     const orderField = sortBy && allowedSortFields.includes(sortBy) ? sortBy : 'id';
     const orderDirection: 'ASC' | 'DESC' =
       sortOrder === 'DESC' ? 'DESC' : 'ASC';
@@ -90,10 +88,3 @@ export class CategoriesService {
     }
   }
 }
-
-
-
-
-
-
-

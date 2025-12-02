@@ -1,4 +1,15 @@
-import {  Controller,  Post as HttpPost,  Get,  Param,  Delete,  Body,  Query,  NotFoundException,  InternalServerErrorException, Put,} from '@nestjs/common';
+import {
+  Controller,
+  Post as HttpPost,
+  Get,
+  Param,
+  Delete,
+  Body,
+  Query,
+  NotFoundException,
+  InternalServerErrorException,
+  Put,
+} from '@nestjs/common';
 import { PostsService } from './posts.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { Post as PostEntity } from './post.entity';
@@ -18,10 +29,10 @@ export class PostsController {
 
   @Get()
   async findAll(
-    @Query('page') page = 1,
+     @Query('page') page = 1,
     @Query('limit') limit = 10,
     @Query('search') search?: string,
-    @Query('searchField') searchField = 'name',
+    @Query('searchField') searchField = 'title',
     @Query('sortBy') sortBy = 'id',
     @Query('sortOrder') sortOrder: 'ASC' | 'DESC' = 'ASC',
   ): Promise<SuccessResponseDto<Pagination<PostEntity>>> {
@@ -29,7 +40,7 @@ export class PostsController {
     page = Number(page);
     limit = limit > 100 ? 100 : limit;
 
-    const response = await this.postsService.findAll({
+    const result = await this.postsService.findAll({
       page,
       limit,
       search,
@@ -37,9 +48,11 @@ export class PostsController {
       sortBy,
       sortOrder,
     });
-    return new SuccessResponseDto('list Users succesfully', response);
+    return new SuccessResponseDto('Posts retrieved successfully', result);
   }
 
+
+  
   @Get(':id')
   async findOne(@Param('id') id: string): Promise<SuccessResponseDto<PostEntity>> {
     const post = await this.postsService.findOne(id);
@@ -64,11 +77,3 @@ export class PostsController {
     return new SuccessResponseDto('Post deleted successfully', id);
   }
 }
-
-
-
-
-
-
-
-

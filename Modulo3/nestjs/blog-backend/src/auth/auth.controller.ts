@@ -32,4 +32,3 @@ export class AuthController {
     return new SuccessResponseDto('Registration successful', { access_token: token });
   }
 }
-
