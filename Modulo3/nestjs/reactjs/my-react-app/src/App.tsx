@@ -119,12 +119,56 @@ function App() {
 export default App;
 */
 
-import ParentAreaTrianguloForm from "./props/ParentAriaTrianguloForm";
+/*
+import ParentAreaTrianguloForm from "./props/ParentAreaTrianguloForm";
 
 function App() {
   return (
     <>
       <ParentAreaTrianguloForm/>
+    </>
+  );
+}
+export default App;
+*/
+
+import AccessWithLimit from "./usestate/AccessWithLimit";
+import CheckboxSummary from "./usestate/CheckboxSummary";
+import DocumentTitleChanger from "./usestate/DocumentTitleChanger";
+import HoverFont from "./usestate/HoverFont";
+import LanguageSwitcher from "./usestate/LanguageSwitcher";
+import MultiSwitch from "./usestate/MultiSwitch";
+import PostLikes from "./usestate/PostLikes";
+import LoginWithLimit from "./usestate/LoginWithLimit";
+import AutoCounter from "./usestate/AutoCounter";
+import DynamicColor from "./usestate/DynamicColor";
+import ClickHistory from "./usestate/ClickHistory";
+
+function App() {
+  return (
+    <>
+      <HoverFont/>
+      <br/>
+      <AccessWithLimit/>
+      <br/>
+      <DocumentTitleChanger/>
+      <br/>
+      <PostLikes/>
+      <br/>
+      <CheckboxSummary/>
+      <br/>
+      <LanguageSwitcher/>
+      <br/>
+      <MultiSwitch/>
+      <br/>
+      <LoginWithLimit/>
+      <br/>
+      <AutoCounter/>
+      <br/>
+      <DynamicColor/>
+      <br/>
+      <ClickHistory/>
+      
     </>
   );
 }
