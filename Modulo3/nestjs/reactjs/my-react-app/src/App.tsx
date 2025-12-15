@@ -132,6 +132,8 @@ function App() {
 export default App;
 */
 
+
+/*
 import AccessWithLimit from "./usestate/AccessWithLimit";
 import CheckboxSummary from "./usestate/CheckboxSummary";
 import DocumentTitleChanger from "./usestate/DocumentTitleChanger";
@@ -173,3 +175,74 @@ function App() {
   );
 }
 export default App;
+
+*/
+
+/*
+import Clock from "./useeffect/Clock";
+import DynamicTitle from "./useeffect/DynamicTitle";
+import FetchUser from "./useeffect/FetchUser";
+import LogEffect from "./useeffect/LogEffect";
+import PersistCounter from "./useeffect/PersistCounter";
+import SafeFetch from "./useeffect/SafeFetch";
+import ScrollLogger from "./useeffect/ScrollLogger";
+
+function App() {
+  return (
+    <>
+      <LogEffect/>
+      <br/>
+      <FetchUser/>
+      <br/>
+      <Clock/>
+      <br/>
+      <ScrollLogger/>
+      <br/>
+      <DynamicTitle/>
+      <br/>
+      <SafeFetch/>
+      <br/>
+      <PersistCounter/>
+      <br/>
+      
+    </>
+  );
+}
+export default App;
+
+*/
+
+
+/* USE CONTEXT
+
+import React, { useState } from 'react';
+import { LanguageContext } from './usecontext/LanguageContext';
+import LanguageToggle from './usecontext/LanguageToggle';
+
+export default function App() {
+  const [lang, setLang] = useState('es');
+  const toggleLanguage = () => setLang(prev => (prev === 'es' ? 'en' : 'es'));
+
+  return (
+    <LanguageContext.Provider value={{ lang, toggleLanguage }}>
+      <LanguageToggle />
+    </LanguageContext.Provider>
+  );
+}
+
+*/
+
+import React, { useState } from 'react';
+import { LoginContext } from './usecontext/LoginContext';
+import LoginStatus from './usecontext/LoginStatus';
+
+export default function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const toggleLogin = () => setIsLoggedIn(prev => !prev);
+
+  return (
+    <LoginContext.Provider value={{ isLoggedIn, toggleLogin }}>
+      <LoginStatus />
+    </LoginContext.Provider>
+  );
+}
