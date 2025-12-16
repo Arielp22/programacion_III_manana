@@ -213,6 +213,7 @@ export default App;
 */
 
 
+
 /* USE CONTEXT
 
 import React, { useState } from 'react';
@@ -229,9 +230,13 @@ export default function App() {
     </LanguageContext.Provider>
   );
 }
+export default App;
 
 */
 
+
+
+/*
 import React, { useState } from 'react';
 import { LoginContext } from './usecontext/LoginContext';
 import LoginStatus from './usecontext/LoginStatus';
@@ -246,3 +251,55 @@ export default function App() {
     </LoginContext.Provider>
   );
 }
+export default App;
+*/
+
+
+
+//UseRef
+
+import CirculoColorido from './UseRef/CirculoColorido';
+import FocoAutomatico from './UseRef/FocoAutomatico';
+import MoverCaja from './UseRef/MoverCaja';
+import ReproductorSonido from './UseRef/ReproductorSonido';
+import ScrollDemo from './UseRef/ScrollDemo';
+
+function App() {
+
+   return (  
+    <>
+      <FocoAutomatico/>
+      <br/>
+      <CirculoColorido/>
+      <br/>
+      <br/>
+      <ScrollDemo/>
+      <br/>
+      <ReproductorSonido/>
+      <br/>
+      <MoverCaja/>
+    </>
+  );
+}
+export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
