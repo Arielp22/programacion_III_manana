@@ -257,7 +257,7 @@ export default App;
 
 
 //UseRef
-
+/*
 import CirculoColorido from './UseRef/CirculoColorido';
 import FocoAutomatico from './UseRef/FocoAutomatico';
 import MoverCaja from './UseRef/MoverCaja';
@@ -283,12 +283,125 @@ function App() {
 }
 export default App;
 
+*/
 
 
+//UseMemo
+/*
+import ContadorLetras from "./UseMemo/ContadorLetras"
+import ExpensiveCalc from "./UseMemo/ExpensiveCalc"
+import FiltroLista from "./UseMemo/FiltroLista"
+import PrimosMemo from "./UseMemo/PrimosMemo"
+import TablaOrdenada from "./UseMemo/TablaOrdenada"
+
+function App() {
+
+   return (  
+    <>
+      <ExpensiveCalc/>
+      <br/>
+      <FiltroLista/>
+      <br/>
+      <TablaOrdenada/>
+      <br/>
+      <PrimosMemo/>
+      <br/>
+      <ContadorLetras/>
+      <br/>      
+    </>
+  );
+}
+export default App;
+*/
+
+//Use CallBack
+/*
+import BotonMemo from "./UseCallback/BotonMemoProps";
+import Contador from "./UseCallback/Contador"
+import ReRender from "./UseCallback/ReRender"
+import Saludo from "./UseCallback/Saludo";
+
+function App() {
+
+   return (  
+    <>
+      <Contador/>
+      <br/>
+      <ReRender/>
+      <br/>
+      <Saludo/>
+      <br/>
+      <BotonMemo/>
+      <br/>
+      
+    </>
+  );
+}
+export default App;
+*/
 
 
+/*
+import Lista from './UseCallback/Lista';
+
+export default function App() {
+  const elementos = ["uno", "dos", "tres", "cuatro"];
+
+  return (
+    <>
+      <h2>Ejemplo de Lista</h2>
+      <Lista items={elementos} />
+    </>
+  );
+}
+
+/////////////////////////////////////////////////////
 
 
+import { memo } from 'react';
+
+interface BotonMemoProps {
+  onClick: () => void;
+}
+
+function Boton({ onClick }: BotonMemoProps) {
+  console.log("Render Botón");
+  return <button onClick={onClick}>Botón memoizado</button>;
+}
+
+const BotonMemo = memo(Boton);
+
+export default BotonMemo;
+*/
+
+
+//UseReducer
+
+import Carrito from "./UseReducer/Carrito";
+import ContadorReducer from "./UseReducer/ContadorReducer";
+import FormSteps from "./UseReducer/FormSteps";
+import FormularioReducer from "./UseReducer/FormularioReducer";
+import ListaReducer from "./UseReducer/ListaReducer";
+
+function App() {
+
+   return (  
+    <>
+      <ContadorReducer/>
+      <br/>
+      <FormularioReducer/>
+      <br/> 
+      <ListaReducer/>
+      <br/>   
+      <Carrito/>
+      <br/>
+      <FormSteps/>
+      <br/>       
+    </>
+  );
+}
+
+export default App;
 
 
 
