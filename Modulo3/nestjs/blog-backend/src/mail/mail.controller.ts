@@ -25,5 +25,4 @@ export class MailController {
         return new SuccessResponseDto('Correo enviado con SendGrid', result);
     }
 
-
 }

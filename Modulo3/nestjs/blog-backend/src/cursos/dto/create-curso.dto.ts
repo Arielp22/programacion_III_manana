@@ -1,4 +1,3 @@
-
 import { IsNotEmpty, IsString, IsNumber, IsArray, IsDateString, ValidateNested } from 'class-validator';
 import { Type } from 'class-transformer';
 import { CreateContenidoDto } from './create-contenido.dto';
@@ -61,4 +60,3 @@ export class CreateCursoDto {
   @Type(() => CreateContenidoDto)
   contenidos: CreateContenidoDto[];
 }
-

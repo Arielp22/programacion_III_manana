@@ -1,75 +1,73 @@
 import { Injectable } from '@nestjs/common';
-import { AnyMxRecord } from 'dns';
 
 @Injectable()
 export class BasicsService {
 
     getMyFirstGet(): object {
-        return{
-        service: 'Blog Backend',
-        controller: '/basics',
-        function: 'Get Example'
+        return {
+            service: 'Blog-Backend',
+            controller: '/basics',
+            function: 'Get Example'
         };
-    }
+      }
 
-    getConParametros(parametro: string): object {
-        return{
-        service: 'Blog Backend',
-        controller: '/basics',
-        function: 'Get Example',
-        parametroRecibido: parametro
+      getConParametros(parametro: string): object {
+        return {
+            service: 'Blog-Backend',
+            controller: '/basics/:parametro',
+            function: 'Get con Parametros',
+            parametroRecibido: parametro
         };
-    }
+      }
 
-    postFunction(bodyPost: object): object {
-        return{
-            service: 'Blog Backend',
+      postFunction(bodyPost: object): object {
+        return {
+            service: 'Blog-Backend',
             controller: '/basics tipo post',
-            function: 'Ejemplo de post',
+            function: 'Ejemplo de petición Post',
             bodyRecibido: bodyPost
         };
-    }
+      }
 
-    putFunction(bodyPost: object, parametro: string): object {
-        return{
-            service: 'Blog Backend',
+      putFunction(bodyPost: object, parametro: string): object {
+        return {
+            service: 'Blog-Backend',
             controller: '/basics tipo put',
-            function: 'Ejemplo de put',
+            function: 'Ejemplo de petición Put',
             bodyRecibido: bodyPost,
             parametro: parametro
         };
-    }
-
-    deleteFunction(parametro: string): object {
-        return{
-            service: 'Blog Backend',
+      }
+      deleteFunction(parametro: string): object {
+        return {
+            service: 'Blog-Backend',
             controller: '/basics tipo delete',
-            function: 'Ejemplo de put',
+            function: 'Ejemplo de petición Delete',
             parametro: parametro
         };
-    }
+      }
 
-    calculoTriangulo(body:any): object{
-        const result : number = (body.base * body.altura)/2
-
-        return{
-            service: 'Blog Backend',
+      calculoTriangulo(body: any): object {
+        const result: number = (body.base*body.altura)/2
+        return {
+            service: 'Blog-Backend',
             controller: '/calculo-area-triangulo',
-            function: 'calculo area triangulo',            
+            function: 'Calculo del area de un triangulo',
+            parametro: body,
             resultado: result
         };
-    }
-    
-    areaRectangulo(ancho:number, alto:number): object{
+      }
+
+      areaRectangulo(ancho: number, alto: number): object {
         const result: number = ancho*alto;
-        return{
-            service: 'Blog Backend',
-            controller: '/calculo-area-rectangulo',
-            function: 'calculo-area-rectangulo/:ancho/:alto',            
+        return {
+            service: 'Blog-Backend',
+            controller: '/basics tipo delete',
+            function: 'calculo-area-rectangulo/:ancho/:alto',
+            ancho: ancho,
+            alto: alto,
             resultado: result
-        }
-    }
-    
+        };
+      }
 
 }
-

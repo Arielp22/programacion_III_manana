@@ -376,7 +376,7 @@ export default BotonMemo;
 
 
 //UseReducer
-
+/*
 import Carrito from "./UseReducer/Carrito";
 import ContadorReducer from "./UseReducer/ContadorReducer";
 import FormSteps from "./UseReducer/FormSteps";
@@ -402,7 +402,25 @@ function App() {
 }
 
 export default App;
+*/
 
+
+import ContadorReducer from "./UseReducer/ContadorReducer";
+import CopyBox from "./usestate/CopyBox";
+
+function App() {
+
+   return (  
+    <>
+      <ContadorReducer/>
+      <br/>
+      <CopyBox/>
+      <br/>         
+    </>
+  );
+}
+
+export default App;
 
 
 
