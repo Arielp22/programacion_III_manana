@@ -1,4 +1,4 @@
-
+// src/pages/public/PublicPostDetail.tsx
 import { useEffect, useState, type JSX } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { Box, Typography, Button } from "@mui/material";
@@ -10,13 +10,14 @@ interface Post {
   content: string;
 }
 
-export function PostDetail(): JSX.Element {
+export default function PublicPostDetail(): JSX.Element {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const [post, setPost] = useState<Post | null>(null);
 
-  useEffect((): void => {
-    axios.get(`http://localhost:3000/posts/${id}`)
+  useEffect(() => {
+    axios
+      .get(`http://localhost:3000/posts/${id}`)
       .then(res => setPost(res.data.data))
       .catch(() => navigate("/"));
   }, [id]);
