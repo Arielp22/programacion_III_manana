@@ -1,7 +1,7 @@
 import { Alert, Button, Paper, Stack, TextField, Typography } from "@mui/material";
 import { useState, type JSX } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/Authcontext";
+import { useAuth } from "../../context/AuthContext";
 
 export default function Register(): JSX.Element {
   const [username, setUsername] = useState("");

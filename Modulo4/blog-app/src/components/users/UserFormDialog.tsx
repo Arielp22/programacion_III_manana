@@ -12,7 +12,7 @@ import {
     TextField,
   } from "@mui/material";
   import { useEffect, useState, type JSX } from "react";
-  import type { UserDto } from "../../services/users.services";
+  import type { UserDto } from "../../services/users.service";
   
   type Props = {
     open: boolean;

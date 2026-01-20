@@ -1,7 +1,7 @@
 import { Alert, Button, Paper, Stack, TextField, Typography } from "@mui/material";
 import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/Authcontext";
+import { useAuth } from "../../context/AuthContext";
 import type { JSX } from "react";
 
 type LocationState = { from?: string };

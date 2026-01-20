@@ -1,27 +1,14 @@
-import {
-  Alert,
-  Button,
-  CircularProgress,
-  IconButton,
-  Pagination,
-  Paper,
-  Stack,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  TextField,
-  Typography,
-} from "@mui/material";
-import { useEffect, useMemo, useState } from "react";
+import { Alert, Button, CircularProgress, IconButton, Pagination, Paper, Stack, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Typography } from "@mui/material";
+import { useEffect, useMemo, useState, type JSX } from "react";
 import { useSearchParams } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 
 import CategoryFormDialog from "../../components/categories/CategoryFormDialog";
+import ConfirmDialog from "../../components/common/ConfirmDialog";
+import { useUi } from "../../context/UiContext";
+import { getApiErrorMessage } from "../../utils/getApiErrorMessage";
 import { type CategoryDto, createCategory, deleteCategory, getCategories, updateCategory } from "../../services/categories.service";
 
 function useDebouncedValue<T>(value: T, delayMs: number): T {
@@ -34,6 +21,7 @@ function useDebouncedValue<T>(value: T, delayMs: number): T {
 }
 
 export default function CategoriesPage(): JSX.Element {
+  const { notify } = useUi();
   const [sp, setSp] = useSearchParams();
 
   const pageParam = Number(sp.get("page") || "1");
@@ -54,6 +42,9 @@ export default function CategoriesPage(): JSX.Element {
   const [open, setOpen] = useState(false);
   const [mode, setMode] = useState<"create" | "edit">("create");
   const [current, setCurrent] = useState<CategoryDto | null>(null);
+
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const [toDelete, setToDelete] = useState<CategoryDto | null>(null);
 
   const queryKey = useMemo(
     () => ({
@@ -89,8 +80,8 @@ export default function CategoriesPage(): JSX.Element {
       const res = await getCategories(queryKey);
       setItems(res.items);
       setTotalPages(res.meta.totalPages || 1);
-    } catch {
-      setError("No se pudieron cargar las categorías.");
+    } catch (e) {
+      setError(getApiErrorMessage(e));
     } finally {
       setLoading(false);
     }
@@ -119,25 +110,35 @@ export default function CategoriesPage(): JSX.Element {
         await createCategory(payload);
         setOpen(false);
         setPage(1);
+        notify({ message: "Categoría creada.", severity: "success" });
         await load();
         return;
       }
       if (!current) return;
       await updateCategory(current.id, payload);
       setOpen(false);
+      notify({ message: "Categoría actualizada.", severity: "success" });
       await load();
-    } catch {
-      setError("No se pudo guardar la categoría.");
+    } catch (e) {
+      notify({ message: getApiErrorMessage(e), severity: "error" });
     }
   };
 
-  const onDelete = async (id: string) => {
+  const askDelete = (c: CategoryDto) => {
+    setToDelete(c);
+    setConfirmOpen(true);
+  };
+
+  const confirmDelete = async () => {
+    if (!toDelete) return;
     try {
-      setError(null);
-      await deleteCategory(id);
+      await deleteCategory(toDelete.id);
+      notify({ message: "Categoría eliminada.", severity: "success" });
+      setConfirmOpen(false);
+      setToDelete(null);
       await load();
-    } catch {
-      setError("No se pudo eliminar la categoría.");
+    } catch (e) {
+      notify({ message: getApiErrorMessage(e), severity: "error" });
     }
   };
 
@@ -155,12 +156,7 @@ export default function CategoriesPage(): JSX.Element {
 
       {error ? <Alert severity="error">{error}</Alert> : null}
 
-      <TextField
-        label="Buscar (por nombre)"
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        fullWidth
-      />
+      <TextField label="Buscar (por nombre)" value={search} onChange={(e) => setSearch(e.target.value)} fullWidth />
 
       {loading ? (
         <CircularProgress />
@@ -181,12 +177,8 @@ export default function CategoriesPage(): JSX.Element {
                   <TableRow key={c.id}>
                     <TableCell>{c.name}</TableCell>
                     <TableCell align="right">
-                      <IconButton onClick={() => onEdit(c)} aria-label="editar">
-                        <EditIcon />
-                      </IconButton>
-                      <IconButton onClick={() => onDelete(c.id)} aria-label="eliminar">
-                        <DeleteIcon />
-                      </IconButton>
+                      <IconButton onClick={() => onEdit(c)} aria-label="editar"><EditIcon /></IconButton>
+                      <IconButton onClick={() => askDelete(c)} aria-label="eliminar"><DeleteIcon /></IconButton>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -200,12 +192,14 @@ export default function CategoriesPage(): JSX.Element {
         </>
       )}
 
-      <CategoryFormDialog
-        open={open}
-        mode={mode}
-        initial={current}
-        onClose={() => setOpen(false)}
-        onSubmit={onSubmit}
+      <CategoryFormDialog open={open} mode={mode} initial={current} onClose={() => setOpen(false)} onSubmit={onSubmit} />
+
+      <ConfirmDialog
+        open={confirmOpen}
+        title="Confirmar eliminación"
+        description={`¿Eliminar la categoría "${toDelete?.name || ""}"?`}
+        onCancel={() => { setConfirmOpen(false); setToDelete(null); }}
+        onConfirm={confirmDelete}
       />
     </Stack>
   );

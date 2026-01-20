@@ -16,7 +16,6 @@ export class User {
   @Column()
   password: string;
 
-  @IsOptional()
   @Column({
     type: 'enum',
     enum: UserRole,

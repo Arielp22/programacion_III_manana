@@ -1,4 +1,5 @@
 import { AppBar, Box, Button, Toolbar, Typography } from "@mui/material";
+import type { JSX } from "react";
 import { Link as RouterLink } from "react-router-dom";
 
 export default function PublicHeader(): JSX.Element {

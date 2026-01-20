@@ -11,9 +11,9 @@ import {
     Stack,
     TextField,
   } from "@mui/material";
-  import { useEffect, useState } from "react";
-  import { CategoryDto } from "../../services/categories.service";
-  import { PostDto } from "../../services/posts.service";
+  import { useEffect, useState, type JSX } from "react";
+  import type { CategoryDto } from "../../services/categories.service";
+  import type { PostDto } from "../../services/posts.service";
   
   type Props = {
     open: boolean;

@@ -1,4 +1,4 @@
-import { RouteObject } from "react-router-dom";
+import type { RouteObject } from "react-router-dom";
 import { publicRoutes } from "./public.routes";
 import { privateRoutes } from "./private.routes";
 import RequireAuth from "./RequireAuth";

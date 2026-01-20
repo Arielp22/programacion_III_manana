@@ -13,7 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import { Outlet, useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, type JSX } from "react";
 import { useAuth } from "../context/AuthContext";
 
 import MenuIcon from "@mui/icons-material/Menu";
@@ -28,13 +28,14 @@ type NavItem = {
   label: string;
   to: string;
   icon: JSX.Element;
+  roles?: string[];
 };
 
 const navItems: NavItem[] = [
   { label: "Inicio", to: "/dashboard", icon: <DashboardIcon /> },
   { label: "Categorías", to: "/dashboard/categories", icon: <CategoryIcon /> },
   { label: "Posts", to: "/dashboard/posts", icon: <ArticleIcon /> },
-  { label: "Users", to: "/dashboard/users", icon: <GroupIcon /> },
+  { label: "Users", to: "/dashboard/users", icon: <GroupIcon />, roles: ["ADMIN"] },
 ];
 
 export default function PrivateLayout(): JSX.Element {
@@ -42,6 +43,9 @@ export default function PrivateLayout(): JSX.Element {
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+
+  const role = (user?.role || "USER").toUpperCase();
+  const visibleItems = navItems.filter((i) => !i.roles || i.roles.map((x) => x.toUpperCase()).includes(role));
 
   const onGo = (to: string) => {
     navigate(to);
@@ -60,12 +64,15 @@ export default function PrivateLayout(): JSX.Element {
         <Typography variant="body2" color="text.secondary">
           {user?.email || user?.username || ""}
         </Typography>
+        <Typography variant="caption" color="text.secondary">
+          Rol: {role}
+        </Typography>
       </Box>
 
       <Divider />
 
       <List>
-        {navItems.map((item) => {
+        {visibleItems.map((item) => {
           const selected = location.pathname === item.to;
           return (
             <ListItemButton key={item.to} selected={selected} onClick={() => onGo(item.to)}>

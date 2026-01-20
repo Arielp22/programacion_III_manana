@@ -1,39 +1,35 @@
+import { useRoutes } from "react-router-dom";
+import { appRoutes } from "./routes/app.routes";
+import type { JSX } from "react";
+import { AuthProvider } from "./context/AuthContext";
+import { UiProvider } from "./context/UiContext";
+
+export default function App(): JSX.Element {
+  const routes = useRoutes(appRoutes);
+  return <>
+    <AuthProvider>
+      <UiProvider>
+        {routes}
+      </UiProvider>
+    </AuthProvider>
+  </>;
+}
+
 /*
 import { useRoutes } from "react-router-dom";
 import { appRoutes } from "./routes";
 import type { JSX } from "react";
+import TestMUI from "./lab/TestMUI";
+import ColorSwitches from "./lab/ColorSwitches";
+import BasicButtons from "./lab/BasicButtons";
+import BasicTable from "./lab/BasicTable";
 
 export default function App(): JSX.Element {
   const routes = useRoutes(appRoutes);
-  return <>{routes}</>;
-}
-*/
-
-
-/*
-
-
-import BasicButtons from "./lab/BasicsButton";
-import BasicTable from "./lab/BasicTable";
-import ColorSwitches from "./lab/colorSwitches";
-import TestMUI from "./lab/TestMUI";
-
-export default function App(): JSX.Element {
   return <>
-  <TestMUI />
-  <ColorSwitches />
-  <BasicButtons />
-  <BasicTable />;
-  </>
-}
-
-*/
-
-import { useRoutes } from "react-router-dom";
-import { appRoutes } from "./routes/app.routes";
-import { AuthProvider } from "./context/AuthContext";
-
-export default function App(): JSX.Element {
-  const element = useRoutes(appRoutes);
-  return <AuthProvider>{element}</AuthProvider>;
-}
+    <TestMUI/>
+    <BasicButtons/>
+    <ColorSwitches/>
+    <BasicTable/>
+  </>;
+}*/

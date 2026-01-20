@@ -23,7 +23,7 @@ import {
   import AddIcon from "@mui/icons-material/Add";
   
   import UserFormDialog from "../../components/users/UserFormDialog";
-  import { type UserDto, createUser, deleteUser, getUsers, updateUser } from "../../services/users.services";
+  import { type UserDto, createUser, deleteUser, getUsers, updateUser } from "../../services/users.service";
   
   function useDebouncedValue<T>(value: T, delayMs: number): T {
     const [debounced, setDebounced] = useState(value);
